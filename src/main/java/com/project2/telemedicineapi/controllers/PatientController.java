@@ -20,7 +20,7 @@ public class PatientController {
 
     @Autowired
     PatientService patientService;
-    
+
     @PostMapping("/register")
     public ResponseEntity createPatient(@RequestBody Patient incomingPatient) {
         try{
