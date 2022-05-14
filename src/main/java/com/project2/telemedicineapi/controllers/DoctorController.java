@@ -52,59 +52,63 @@ public class DoctorController {
     public ResponseEntity<?> getAllPatients(@RequestHeader("Authorization") String jwt) {
 
         if (!jwt.equals(null) && !jwt.equals("")) {
-
-            jwt = jwt.split(" ")[1];
-            Jws<Claims> token = null;
             try {
-                token = jwtService.parseJwt(jwt);
-                String role =null;
-                try{
-                     role = token.getBody().get("user_id").toString().split(" ")[0];
-                }catch (UnauthorizedExeption r){
-                    return ResponseEntity.status(500).body("Invalid User Information");
-                }
 
 
-                if (token != null && role.equals("doctor")) {
-                    List<Patient> patient = patientService.getallpatients();
-                    return ResponseEntity.ok().body(patient);
-                } else {
-                    return ResponseEntity.status(403).body("You are not authorized at this point");
+                jwt = jwt.split(" ")[1];
+                Jws<Claims> token = null;
+                try {
+                    token = jwtService.parseJwt(jwt);
+                    String role = null;
+                    try {
+                        role = token.getBody().get("user_id").toString().split(" ")[0];
+                    } catch (UnauthorizedExeption r) {
+                        return ResponseEntity.status(500).body("Invalid User Information");
+                    }
+
+
+                    if (token != null && role.equals("doctor")) {
+                        List<Patient> patient = patientService.getallpatients();
+                        return ResponseEntity.ok().body(patient);
+                    } else {
+                        return ResponseEntity.status(403).body("You are not authorized at this point");
+                    }
+                } catch (UnAuthorizedResponse e) {
+                    return ResponseEntity.status(500).body("Invalid Token");
                 }
-            } catch (UnAuthorizedResponse e) {
-                return ResponseEntity.status(500).body("Invalid User Information");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return ResponseEntity.status(400).body("You need to Login");
             }
 
         }
-
-        return ResponseEntity.status(400).body("You need to Login");
+        return ResponseEntity.status(500).body("Internal Error");
     }
 
 
     @GetMapping("/getAllDoctors")
     public ResponseEntity<?> getAllDoctors(@RequestHeader("Authorization") String jwt) {
         if (!jwt.equals(null) && !jwt.equals("")) {
-            jwt = jwt.split(" ")[1];
-            Jws<Claims> token = null;
             try {
-                token = jwtService.parseJwt(jwt);
-                String role = token.getBody().get("user_id").toString().split(" ")[0];
-                if (token != null && role.equals("doctor")) {
-                    List<Doctor> doctor = doctorService.getalldoctors();
-                    return ResponseEntity.ok().body(doctor);
-
+                jwt = jwt.split(" ")[1];
+                Jws<Claims> token = null;
+                String role = null;
+                try {
+                    token = jwtService.parseJwt(jwt);
+                    role = token.getBody().get("user_id").toString().split(" ")[0];
+                    if (token != null && role.equals("doctor")) {
+                        List<Doctor> doctor = doctorService.getalldoctors();
+                        return ResponseEntity.ok().body(doctor);
+                    } else {
+                        return ResponseEntity.status(403).body("You are not authorized at this point");
+                    }
+                } catch (UnAuthorizedResponse e) {
+                    return ResponseEntity.status(500).body("Invalid User Information");
                 }
-                else {
-                    return ResponseEntity.status(403).body("You are not authorized at this point");
-                }
 
-            } catch (UnAuthorizedResponse e) {
-                return ResponseEntity.status(500).body("Invalid User Information");
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return ResponseEntity.status(400).body("You need to Login");
             }
-
         }
-            return ResponseEntity.status(400).body("You need to Login");
-
-
+        return ResponseEntity.status(500).body("Internal Error");
     }
 }
