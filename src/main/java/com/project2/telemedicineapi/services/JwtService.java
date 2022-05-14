@@ -1,6 +1,7 @@
 package com.project2.telemedicineapi.services;
 
 import com.project2.telemedicineapi.entities.Doctor;
+import com.project2.telemedicineapi.entities.Patient;
 import com.project2.telemedicineapi.exception.UnAuthorizedResponse;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -34,7 +35,13 @@ public class JwtService {
     // sign a JWT with the key
     public String createJwt(Doctor doctor) {
         return Jwts.builder().setSubject(doctor.getUsername())
-                .claim("user_id", doctor.getId())
+                .claim("user_id", "doctor "+doctor.getId())
+                .signWith(key)
+                .compact();
+    }
+    public String createPatientJwt(Patient patient) {
+        return Jwts.builder().setSubject(patient.getUsername())
+                .claim("user_id", "patient "+patient.getId())
                 .signWith(key)
                 .compact();
     }
@@ -42,6 +49,8 @@ public class JwtService {
     // validate a JWT with the key
     public Jws<Claims> parseJwt(String jwt) throws UnAuthorizedResponse {
         try {
+            String id = String.valueOf(Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt));
+            System.out.println("value:  "+id);
             return Jwts.parserBuilder().setSigningKey(key)
                     .build()
                     .parseClaimsJws(jwt);
