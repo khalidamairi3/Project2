@@ -27,13 +27,19 @@ public class DoctorController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
-
+    try{
         Doctor doctor = doctorService.login(dto);
         String jwt = jwtService.createJwt(doctor);
 
-        HttpHeaders responseHeader = new HttpHeaders();
-        responseHeader.set("token", jwt);
+        // Unused code
+//        HttpHeaders responseHeader = new HttpHeaders();
+//        responseHeader.set("token", jwt);
         return ResponseEntity.ok().body(jwt);
+
+    }catch (Exception ex){
+        return ResponseEntity.notFound().build();
+    }
+
 
     }
 
