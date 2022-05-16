@@ -1,6 +1,7 @@
 package com.project2.telemedicineapi.controllers;
 
 import com.project2.telemedicineapi.dto.AppointmentRequest;
+import com.project2.telemedicineapi.dto.AppointmentRequestDTO;
 import com.project2.telemedicineapi.entities.Appointment;
 import com.project2.telemedicineapi.entities.Patient;
 import com.project2.telemedicineapi.repositories.AppointmentRepository;
@@ -24,8 +25,6 @@ public class AppointmentController {
 
     @Autowired
     AppointmentService appointmentService;
-//    @Autowired
-//    PatientService patientService;
 
     @GetMapping("/all")
     public ResponseEntity getAllAppointments(){
@@ -75,6 +74,7 @@ public class AppointmentController {
         }
 
     }
+
 //
 //    //Get All Appointments By Patient Name
 //    //Get Patient By phoneNum

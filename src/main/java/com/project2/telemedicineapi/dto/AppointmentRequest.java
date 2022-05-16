@@ -12,4 +12,5 @@ public class AppointmentRequest {
     private int doctorId;
     private int patientId;
     private String dateTime;
+
 }

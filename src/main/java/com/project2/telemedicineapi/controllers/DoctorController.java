@@ -68,7 +68,7 @@ public class DoctorController {
 
 
                     if (token != null && role.equals("doctor")) {
-                        List<Patient> patient = patientService.getallpatients();
+                        List<Patient> patient = patientService.getAllPatients();
                         return ResponseEntity.ok().body(patient);
                     } else {
                         return ResponseEntity.status(403).body("You are not authorized at this point");

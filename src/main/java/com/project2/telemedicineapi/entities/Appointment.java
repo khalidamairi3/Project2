@@ -32,4 +32,10 @@ public class Appointment {
     @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
+    public Appointment(Integer id, boolean approved, Doctor doctor, Patient patient) {
+        this.id = id;
+        this.approved = approved;
+        this.doctor = doctor;
+        this.patient = patient;
+    }
 }
