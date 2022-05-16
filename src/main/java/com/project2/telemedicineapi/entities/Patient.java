@@ -18,41 +18,42 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.JoinColumn;
 
+// Creating a Table "patient" in the database, with uniqueConstraint ==> username
+//  & keeping id as a primary key
 @Entity
 @Table(name =  "patient", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class Patient {
 	
-	
-//  private String username;
-//  private String password;//  private String firstName;
-//  private String lastName;
-//  private String dob;
-//  private String phoneNum;
-	
+// Setting up  "id" as Primary Key
 	@Id
 	@GeneratedValue(strategy =  GenerationType.AUTO)
 	private int id;
 	
+// Introducing column "username" in "patient" Table
 	@Column(name = "username" , nullable = false)
 	private String userName;
 	
+// Introducing column "password" in "patient" Table
 	@Column(name = "password", nullable = false)
 	private String password;
-	
+
+// Introducing column "first_name" in "patient" Table	
 	@Column(name = "first_name" , nullable = false)
 	private String firstName;
 	
+// Introducing column "last_name" in "patient" Table	
 	@Column(name = "last_name", nullable = false)
 	private String lastName;
-	
+
+// Introducing column "dob" in "patient" Table
 	@Column(name = "dob", nullable = false)
 	private String dob;
-	
+
+// Introducing column "phone_num" in "patient" Table	
 	@Column(name = "phone_num", nullable = false)
 	private String phoneNum;
 	
-	
-	
+
 //	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 //	@JoinTable(
 //			name = "patient-doctor-List",
@@ -63,10 +64,12 @@ public class Patient {
 //	private Collection<Doctor> doctors;
 	
 	
+// No Args Constructor	
 	public Patient() {
 		super();
 	}
 
+// Constructor with field names	
 	public Patient(String userName, String password, String firstName, String lastName, String dob, String phoneNum
 			) {
 		super();
@@ -76,9 +79,10 @@ public class Patient {
 		this.lastName = lastName;
 		this.dob = dob;
 		this.phoneNum = phoneNum;
-		//this.doctors = doctors;
+		
 	}
 
+// Getter & Setter Methods for all fields  ======>	
 	public int getId() {
 		return id;
 	}
@@ -135,6 +139,7 @@ public class Patient {
 		this.phoneNum = phoneNum;
 	}
 
+	// To String Method
 	@Override
 	public String toString() {
 		return "Patient [userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName="
@@ -142,17 +147,6 @@ public class Patient {
 	}
 
 	
-
-//	public Collection<Doctor> getDoctors() {
-//		return doctors;
-//	}
-//
-//	public void setDoctors(Collection<Doctor> doctors) {
-//		this.doctors = doctors;
-//	}
-
-	
 }
 
 
-//}

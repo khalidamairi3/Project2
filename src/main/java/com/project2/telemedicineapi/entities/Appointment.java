@@ -12,30 +12,28 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+//Creating a Table "Appointments" in the database, with uniqueConstraint ==> dateTime
+//& keeping id as a primary key
 @Entity
 @Table(name =  "Appointments", uniqueConstraints = @UniqueConstraint(columnNames = "dateTime"))
 public class Appointment {
 	
-	
-//  private String username;
-//  private String password;//  private String firstName;
-//  private String lastName;
-//  private String dob;
-//  private String phoneNum;
-	
+// Setting up  "id" as Primary Key
 	@Id
 	@GeneratedValue(strategy =  GenerationType.AUTO)
 	private int id;
 	
+// Introducing column "dateTime" in "Appointments" Table	
 	@Column(name = "dateTime" , nullable = false)
-	private String dateTime;
+		private String dateTime;
 	
+// Introducing column "Status" in "Appointments" Table
 	@Column(name = "Status", nullable = false)
 	private String status;
 	
+// Introducing column "note" in "Appointments" Table
 	@Column(name = "note" , nullable = false)
 	private String note;
-	
 	
 //	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinColumn(name="doctor_id", referencedColumnName = "id")
@@ -47,11 +45,13 @@ public class Appointment {
     //@Column(name = "patient" , nullable = false)
 	private String patient;
 
+// No Args Constructor	
 	public Appointment() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+// Constructor with field names	
 	public Appointment(String dateTime, String status, String note, String doctor, String patient) {
 		super();
 		this.dateTime = dateTime;
@@ -61,6 +61,7 @@ public class Appointment {
 		this.patient = patient;
 	}
 
+// Getter & Setter Methods for all fields  ======>	
 	public String getDateTime() {
 		return dateTime;
 	}
@@ -109,6 +110,7 @@ public class Appointment {
 		this.id = id;
 	}
 
+// To String Method	
 	@Override
 	public String toString() {
 		return "Appointment [dateTime=" + dateTime + ", status=" + status + ", note=" + note + ", doctor=" + doctor

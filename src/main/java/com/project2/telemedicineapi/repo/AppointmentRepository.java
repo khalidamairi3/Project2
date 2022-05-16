@@ -11,8 +11,10 @@ import com.project2.telemedicineapi.entities.Appointment;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
+// Finding an appointment by Patient
 	List<Appointment> getAppointmentByPatient(String patient);
 
+// Finding an appointment by Doctor
 	List<Appointment> getAppointmentByDoctor(String doctor);
 
 

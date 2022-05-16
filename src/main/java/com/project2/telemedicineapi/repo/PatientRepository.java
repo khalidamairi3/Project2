@@ -12,7 +12,12 @@ import com.project2.telemedicineapi.entities.Patient;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Integer> {
 	
+// Finding a Patient By Phone Number
 	Patient getPatientByphoneNum( String phoneNum);
+
+
+	
+	
 
 
 	
