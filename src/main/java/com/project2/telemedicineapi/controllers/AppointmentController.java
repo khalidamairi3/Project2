@@ -1,23 +1,15 @@
 package com.project2.telemedicineapi.controllers;
 
 import com.project2.telemedicineapi.dto.AppointmentRequest;
-import com.project2.telemedicineapi.dto.AppointmentRequestDTO;
-import com.project2.telemedicineapi.entities.Appointment;
-import com.project2.telemedicineapi.entities.Patient;
 import com.project2.telemedicineapi.exception.UnAuthorizedResponse;
 import com.project2.telemedicineapi.exception.UnauthorizedExeption;
-import com.project2.telemedicineapi.repositories.AppointmentRepository;
 import com.project2.telemedicineapi.services.AppointmentService;
 import com.project2.telemedicineapi.services.JwtService;
-import com.project2.telemedicineapi.services.PatientService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/appointment")

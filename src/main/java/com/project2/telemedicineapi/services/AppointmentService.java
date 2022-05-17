@@ -1,17 +1,13 @@
 package com.project2.telemedicineapi.services;
 
 import com.project2.telemedicineapi.dto.AppointmentRequest;
-import com.project2.telemedicineapi.dto.AppointmentRequestDTO;
 import com.project2.telemedicineapi.entities.Appointment;
 import com.project2.telemedicineapi.entities.Doctor;
 import com.project2.telemedicineapi.entities.Patient;
 import com.project2.telemedicineapi.helpers.NotificationClient;
 import com.project2.telemedicineapi.repositories.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
