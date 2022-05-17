@@ -63,6 +63,11 @@ public class AppointmentService {
         notificationClient.callPostEmail(appointment.getPatient().getPhoneNum(),"Hey " + appointment.getPatient().getUsername() + ", your appointment on " + appointment.getDateTime() + " has been " +appointment.getStatus() +" by "+  appointment.getDoctor().getUsername() );
         appointmentRepository.save(appointment);
     }
+    public void addNote(int id,String note){
+        Appointment appointment = getAppointment(id);
+        appointment.setNote(note);
+        appointmentRepository.save(appointment);
+    }
 
 
 }
