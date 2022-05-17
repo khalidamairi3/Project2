@@ -12,6 +12,8 @@ import com.project2.telemedicineapi.services.PatientService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +32,17 @@ public class DoctorController {
     @Autowired
     JwtService jwtService;
 
+    Logger logger = LoggerFactory.getLogger(DoctorController.class);
+
+    /**
+     *
+     * @param dto this is store the username and password
+     * @return once the token will provide by the doctor it will return the doctor object to the body
+     */
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
+        logger.info("Doctor login  endpoint invock");
         try {
             Doctor doctor = doctorService.login(dto);
             String jwt = jwtService.createJwt(doctor);
@@ -48,13 +59,17 @@ public class DoctorController {
 
     }
 
+    /**
+     * @param jwt this will store the token
+     * @return if token is correct and roles is doctor than it will return the list of all the patients
+     *
+     */
     @GetMapping("/getAllPatients")
     public ResponseEntity<?> getAllPatients(@RequestHeader("Authorization") String jwt) {
 
+        logger.info("getALLPatients by Doctor endpoint invocked");
         if (!jwt.equals(null) && !jwt.equals("")) {
             try {
-
-
                 jwt = jwt.split(" ")[1];
                 Jws<Claims> token = null;
                 try {
@@ -65,8 +80,6 @@ public class DoctorController {
                     } catch (UnauthorizedExeption r) {
                         return ResponseEntity.status(500).body("Invalid User Information");
                     }
-
-
                     if (token != null && role.equals("doctor")) {
                         List<Patient> patient = patientService.getAllPatients();
                         return ResponseEntity.ok().body(patient);
@@ -85,8 +98,13 @@ public class DoctorController {
     }
 
 
+    /**
+     * @return return all the doctor list in the doctor object
+     */
+
     @GetMapping("/getAllDoctors")
     public ResponseEntity<?> getAllDoctors(@RequestHeader("Authorization") String jwt) {
+        logger.info("GetALLDoctor invocked by doctor to get list of Available Doctors");
         if (!jwt.equals(null) && !jwt.equals("")) {
             try {
                 jwt = jwt.split(" ")[1];
