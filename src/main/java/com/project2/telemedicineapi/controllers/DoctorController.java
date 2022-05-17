@@ -1,5 +1,8 @@
 package com.project2.telemedicineapi.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.project2.telemedicineapi.dto.LoginDTO;
 import com.project2.telemedicineapi.entities.Doctor;
 import com.project2.telemedicineapi.entities.Patient;
@@ -17,12 +20,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/doctor")
 public class DoctorController {
+    final Logger logger = LoggerFactory.getLogger(DoctorController.class);
+
     @Autowired
     DoctorService doctorService;
     @Autowired
@@ -38,77 +44,85 @@ public class DoctorController {
             HttpHeaders reposeHeader = new HttpHeaders();
             reposeHeader.set("token", jwt);
             return ResponseEntity.ok().headers(reposeHeader).body(doctor); /* Components oof HttpResponse method
-                                                                                1. Status - is the reponse status
-                                                                                2. header - header will have the token
                                                                                 3. body(optional) in this case we are returning doctor object in response body*/
         } catch (Exception ex) {
             return ResponseEntity.notFound().build();
-
         }
 
     }
 
-    @GetMapping("/getAllPatients")
-    public ResponseEntity<?> getAllPatients(@RequestHeader("Authorization") String jwt) {
+//    @GetMapping("/getAllPatients")
+//    public ResponseEntity<?> getAllPatients(@RequestHeader("Authorization") String jwt) {
+//
+//        if (!jwt.equals(null) && !jwt.equals("")) {
+//            try {
+//
+//
+//                jwt = jwt.split(" ")[1];
+//                Jws<Claims> token = null;
+//                try {
+//                    token = jwtService.parseJwt(jwt);
+//                    String role = null;
+//                    try {
+//                        role = token.getBody().get("user_id").toString().split(" ")[0];
+//                    } catch (UnauthorizedExeption r) {
+//                        return ResponseEntity.status(500).body("Invalid User Information");
+//                    }
+//
+//
+//                    if (token != null && role.equals("doctor")) {
+//                        List<Patient> patient = patientService.getallpatients();
+//                        return ResponseEntity.ok().body(patient);
+//                    } else {
+//                        return ResponseEntity.status(403).body("You are not authorized at this point");
+//                    }
+//                } catch (UnAuthorizedResponse e) {
+//                    return ResponseEntity.status(500).body("Invalid Token");
+//                }
+//            } catch (ArrayIndexOutOfBoundsException e) {
+//                return ResponseEntity.status(400).body("You need to Login");
+//            }
+//
+//        }
+//        return ResponseEntity.status(500).body("Internal Error");
+//    }
+//
 
-        if (!jwt.equals(null) && !jwt.equals("")) {
-            try {
+//    @GetMapping("/getAllDoctors")
+//    public ResponseEntity<?> getAllDoctors(@RequestHeader("Authorization") String jwt) {
+//        if (!jwt.equals(null) && !jwt.equals("")) {
+//            try {
+//                jwt = jwt.split(" ")[1];
+//                Jws<Claims> token = null;
+//                String role = null;
+//                try {
+//                    token = jwtService.parseJwt(jwt);
+//                    role = token.getBody().get("user_id").toString().split(" ")[0];
+//                    if (token != null && role.equals("doctor")) {
+//                        List<Doctor> doctor = doctorService.getalldoctors();
+//                        return ResponseEntity.ok().body(doctor);
+//                    } else {
+//                        return ResponseEntity.status(403).body("You are not authorized at this point");
+//                    }
+//                } catch (UnAuthorizedResponse e) {
+//                    return ResponseEntity.status(500).body("Invalid User Information");
+//                }
+//
+//            } catch (ArrayIndexOutOfBoundsException e) {
+//                return ResponseEntity.status(400).body("You need to Login");
+//            }
+//        }
+//        return ResponseEntity.status(500).body("Internal Error");
+//    }
 
 
-                jwt = jwt.split(" ")[1];
-                Jws<Claims> token = null;
-                try {
-                    token = jwtService.parseJwt(jwt);
-                    String role = null;
-                    try {
-                        role = token.getBody().get("user_id").toString().split(" ")[0];
-                    } catch (UnauthorizedExeption r) {
-                        return ResponseEntity.status(500).body("Invalid User Information");
-                    }
-
-
-                    if (token != null && role.equals("doctor")) {
-                        List<Patient> patient = patientService.getallpatients();
-                        return ResponseEntity.ok().body(patient);
-                    } else {
-                        return ResponseEntity.status(403).body("You are not authorized at this point");
-                    }
-                } catch (UnAuthorizedResponse e) {
-                    return ResponseEntity.status(500).body("Invalid Token");
-                }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                return ResponseEntity.status(400).body("You need to Login");
-            }
-
-        }
-        return ResponseEntity.status(500).body("Internal Error");
-    }
-
-
+    /**
+     * Get all doctors
+     * @return all doctor instances
+     */
     @GetMapping("/getAllDoctors")
-    public ResponseEntity<?> getAllDoctors(@RequestHeader("Authorization") String jwt) {
-        if (!jwt.equals(null) && !jwt.equals("")) {
-            try {
-                jwt = jwt.split(" ")[1];
-                Jws<Claims> token = null;
-                String role = null;
-                try {
-                    token = jwtService.parseJwt(jwt);
-                    role = token.getBody().get("user_id").toString().split(" ")[0];
-                    if (token != null && role.equals("doctor")) {
-                        List<Doctor> doctor = doctorService.getalldoctors();
-                        return ResponseEntity.ok().body(doctor);
-                    } else {
-                        return ResponseEntity.status(403).body("You are not authorized at this point");
-                    }
-                } catch (UnAuthorizedResponse e) {
-                    return ResponseEntity.status(500).body("Invalid User Information");
-                }
-
-            } catch (ArrayIndexOutOfBoundsException e) {
-                return ResponseEntity.status(400).body("You need to Login");
-            }
-        }
-        return ResponseEntity.status(500).body("Internal Error");
+    public ResponseEntity<List<Doctor>> getAllDoctors() {
+//        logger.debug("Get all doctors: {}", doctorService.getAllDoctors());
+        return ResponseEntity.ok(doctorService.getAllDoctors());
     }
 }

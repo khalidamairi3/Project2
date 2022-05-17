@@ -2,6 +2,7 @@ package com.project2.telemedicineapi.services;
 
 import com.project2.telemedicineapi.dto.LoginDTO;
 import com.project2.telemedicineapi.entities.Doctor;
+import com.project2.telemedicineapi.entities.Patient;
 import com.project2.telemedicineapi.exception.DoctorsNotFound;
 import com.project2.telemedicineapi.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,17 @@ public class DoctorService {
     @Autowired
     DoctorRepository doctorrepository;
 
-    public List<Doctor> getalldoctors() throws DoctorsNotFound {
+    public List<Doctor> getAllDoctors() throws DoctorsNotFound {
         List<Doctor> doctor = doctorrepository.findAll();
         return doctor;
     }
+
+
+    public Doctor getDoctorByLastName(String lastName) {
+        return doctorrepository.findByLastName(lastName);
+    }
+
+
     public Doctor login(LoginDTO dto){
         if(dto.getUsername().trim().equals("") || dto.getPassword().trim().equals("")){
             throw new DoctorsNotFound("Invalid input"); //need to add different exception
@@ -28,5 +36,9 @@ public class DoctorService {
             throw new DoctorsNotFound("Invalid username or password");
         }
         return doctor;
+    }
+
+    public Doctor getDoctorById(int id){
+        return doctorrepository.getById(id);
     }
 }

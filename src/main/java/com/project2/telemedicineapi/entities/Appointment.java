@@ -20,15 +20,16 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String dateTime;
-    private boolean approved;
+    private String date;
+    private String time;
+    private String status;
     private String note;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 

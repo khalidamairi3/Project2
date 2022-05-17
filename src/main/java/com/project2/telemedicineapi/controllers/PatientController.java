@@ -1,50 +1,67 @@
 package com.project2.telemedicineapi.controllers;
 
-import com.project2.telemedicineapi.dto.LoginDTO;
-import com.project2.telemedicineapi.entities.Patient;
-import com.project2.telemedicineapi.exception.BadParameterxception;
-import com.project2.telemedicineapi.exception.UnAuthorizedResponse;
-import com.project2.telemedicineapi.services.JwtService;
-import com.project2.telemedicineapi.services.PatientService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
+import java.util.List;
+import java.util.Optional;
+
+import com.project2.telemedicineapi.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.project2.telemedicineapi.entities.Appointment;
+import com.project2.telemedicineapi.entities.Patient;
 
+import com.project2.telemedicineapi.services.PatientService;
+
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
+
     @Autowired
     PatientService patientService;
-    @Autowired
-    JwtService jwtService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> loginPatient(@RequestBody LoginDTO dto) {
-        try {
-            Patient patient = patientService.loginPatient(dto);
-            String jwt = jwtService.createPatientJwt(patient);
-            HttpHeaders reposeHeader = new HttpHeaders();
-            reposeHeader.set("token", jwt);
-            return ResponseEntity.ok().headers(reposeHeader).body(patient);
-        } catch (Exception ex1) {
-            return ResponseEntity.notFound().build();
+    @PostMapping("/register")
+    public ResponseEntity createPatient(@RequestBody Patient incomingPatient) {
+        try{
+            patientService.createPatient(incomingPatient);
+            return ResponseEntity.accepted().build();
+        }catch (Exception ex){
+            return ResponseEntity.badRequest().build();
         }
+
+
     }
 
+    @GetMapping("/all")
+    public ResponseEntity viewAllPatients() {
+        try{
+            return ResponseEntity.ok(patientService.getAllPatients());
+        }catch (Exception ex){
+            return ResponseEntity.notFound().build();
+        }
 
-    @PostMapping
-    public ResponseEntity<?> registerPatients(@RequestBody Patient patient) {
+    }
 
-           Patient newPatient = patientService.registerPatients(patient);
-           return ResponseEntity.ok().body(newPatient);
+    @GetMapping("/{id}")
+    public ResponseEntity findPatientById(@PathVariable int id) {
+        try{
+            return ResponseEntity.ok(patientService.getPatientById(id));
+        }catch (Exception ex){
+            return ResponseEntity.notFound().build();
+        }
 
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity editPatientProfile(@RequestBody Patient existingPatient) {
+        try{
+            patientService.createPatient(existingPatient);
+            return ResponseEntity.accepted().build();
+        }catch (Exception ex){
+            return ResponseEntity.badRequest().build();
+        }
 
 
     }
 }
-

@@ -1,7 +1,5 @@
 server:
   port: 8080
-#  servlet:
-#    context-path: /bears
 
 management:
   endpoints:
@@ -11,8 +9,8 @@ management:
 spring:
   datasource:
     username: root
-    password: Subhana@2020
-    url: jdbc:mysql://34.130.13.72:3306/TeleMedeAPP
+    password: password
+    url: jdbc:mysql://34.135.106.200/telemedapp
   jpa:
     hibernate:
       naming:
