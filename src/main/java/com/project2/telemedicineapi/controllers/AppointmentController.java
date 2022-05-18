@@ -256,7 +256,7 @@ public class AppointmentController {
     }
 
     /// UPDATED!!!!!
-        // Added request body and service call
+    // Added request body and service call
     /**
      * Sends put request to update appointment consultation note
      * @param  note - note data transfer object
@@ -264,7 +264,7 @@ public class AppointmentController {
      */
     @PutMapping("/{id}/note")
     public ResponseEntity addNote(@PathVariable int id, @RequestBody String note, @RequestHeader("Authorization") String jwt){
-                logger.info("Note successfully added!");
+        logger.info("Note successfully added!");
         if (!jwt.equals(null) && !jwt.equals("")) {
             try {
 
@@ -295,6 +295,18 @@ public class AppointmentController {
 
         }
         return ResponseEntity.status(500).body("Internal Error");
+    }
+
+
+    /// ADDED!!
+    /**
+     * Delete request to delete appointment
+     * @param id - appointment id
+     */
+    @DeleteMapping("/request/{id}")
+    public void deleteAppointment(@PathVariable int id) {
+        appointmentService.deleteAppointment(id);
+        logger.info("Appointment successfully deleted!");
     }
 
 }
