@@ -9,8 +9,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AppointmentRequest {
-    private String drLastName;
-    private String ptLastName;
+    private String drLastName;  //CHANGED from id
+    private String ptLastName;  //CHANGED from id
     private String date;
     private String time;
 }

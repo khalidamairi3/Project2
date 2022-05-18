@@ -1,7 +1,6 @@
 package com.project2.telemedicineapi.services;
 
 import com.project2.telemedicineapi.dto.LoginDTO;
-import com.project2.telemedicineapi.entities.Doctor;
 import com.project2.telemedicineapi.entities.Patient;
 import com.project2.telemedicineapi.exception.BadParameterxception;
 import com.project2.telemedicineapi.exception.DoctorsNotFound;
@@ -18,13 +17,25 @@ public class PatientService {
     @Autowired
     PatientRepository patientRepository;
 
+    /**
+     * Create patient
+     * @param incomingPatient - patient instance
+     */
     public void createPatient(Patient incomingPatient) {
         patientRepository.save(incomingPatient);
     }
+
+    /**
+     * Get all patients
+     */
     public List<Patient> getAllPatients(){
         return patientRepository.findAll();
     }
 
+    /**
+     * Get patient by id
+     * @param id
+     */
     public Optional<Patient> getPatientById(int id){
         return patientRepository.findById(id);
     }
@@ -33,6 +44,11 @@ public class PatientService {
         return patientRepository.findById(id).get();
     }
 
+    //ADDED FOR CREATE APPOINTMENT FEATURE
+    /**
+     * Get patient by last name
+     * @param lastName
+     */
     public Patient getPatientByLastName(String lastName) {
         return patientRepository.findByLastName(lastName);
     }

@@ -1,6 +1,5 @@
 package com.project2.telemedicineapi.services;
 
-import com.project2.telemedicineapi.dto.AppointmentDTO;
 import com.project2.telemedicineapi.dto.AppointmentRequest;
 import com.project2.telemedicineapi.entities.Appointment;
 import com.project2.telemedicineapi.entities.Doctor;
@@ -11,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -29,11 +26,13 @@ public class AppointmentService {
     @Autowired
     DoctorService doctorService;
 
+    /**
+     * Create appointment
+     * @param newAppointment - new appointment data transfer object
+     */
     public void createAppointment(AppointmentRequest newAppointment) {
         Appointment appointment = new Appointment();
-//        Doctor doctor = doctorService.getDoctorById(newAppointment.getDoctorId());
-//        Patient patient = patientService.getPatient(newAppointment.getPatientId());
-//
+
         Doctor doctor = doctorService.getDoctorByLastName(newAppointment.getDrLastName());
         Patient patient = patientService.getPatientByLastName(newAppointment.getPtLastName());
         appointment.setStatus("Pending");
@@ -45,47 +44,64 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
+    /**
+     * Get all appointments
+     */
     public List<Appointment> getAll(){
         return appointmentRepository.findAll();
     }
+
+    /**
+     * Get appointment associated with doctor id
+     * @param id - doctor id
+     */
     public List<Appointment> getAppointmentsByDoctorId(int id){
         return appointmentRepository.getAppointmentByDoctorId(id);
     }
+
+    /**
+     * Get appointments associated with patient id
+     * @param id - patient id
+     */
     public List<Appointment> getAppointmentsByPatientId(int id){
         return appointmentRepository.getAppointmentByPatientId(id);
-
     }
+
+    /**
+     * Get appointment by id
+     * @param id - appointment id
+     */
     public Appointment getAppointment(int id) {
         return appointmentRepository.findById(id).get();
     }
 
-//    /**
-//     * Converts and updates the incoming dto into a reimbursement instance
-//     * Creates an email to notify the employee and manager of the changes
-//     * @param dto - the reimbursement data transfer object
-//     */
-//    public void updateEntity(AppointmentDTO dto, int id) {
-//        int doctorId = dto.getDoctorId();
-//        int patientId = dto.getPatientId();
-//        String date = dto.getDate();
-//        String time = dto.getTime();
-//        String note = dto.getNote();
-//        String status = dto.getStatus();
-//
-////        logger.debug("Status: {}", managerRepository.findByFullName(managerName));
-////        logger.debug("Find manger via full name: {}", dto.getStatus());
-////        logger.debug("Reimbursement id: {}", id);
-//
-//        appointmentRepository.updateAppointmentById(id, date, time, note, status);
-//    }
-
+    /**
+     * Update appointment status
+     * @param status
+     */
     public void updateStatus(int id, String status){
         Appointment appointment = getAppointment(id);
         appointment.setStatus(status);
         appointmentRepository.save(appointment);
     }
 
+    //ADDED
+    /**
+     * Delete appointment with id
+     * @param id - appointment id
+     */
     public void deleteAppointment(int id) {
         appointmentRepository.deleteById(id);
+    }
+
+    /**
+     * Add note to appointment with associated id
+     * @param id - appointment id
+     * @param note - consult note
+     */
+    public void addNote(int id, String note){
+        Appointment appointment = getAppointment(id);
+        appointment.setNote(note);
+        appointmentRepository.save(appointment);
     }
 }
