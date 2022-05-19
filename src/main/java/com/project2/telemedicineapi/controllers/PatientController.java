@@ -80,7 +80,7 @@ public class PatientController {
 
 
                     if (token != null && (role.equals("patient") || role.equals("doctor"))) {
-                        return ResponseEntity.ok(patientService.getPatientById(id));
+                        return ResponseEntity.ok(patientService.getPatient(id));
                     } else {
                         return ResponseEntity.status(403).body("You are not authorized at this point");
                     }
