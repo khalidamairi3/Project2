@@ -1,4 +1,4 @@
-package com.project2.telemedicineapi.serviceTest;
+package com.project2.telemedicineapi.services;
 
 import com.project2.telemedicineapi.dto.LoginDTO;
 import com.project2.telemedicineapi.entities.Doctor;
