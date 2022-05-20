@@ -1,23 +1,15 @@
 package com.project2.telemedicineapi.controllers;
 
 import com.project2.telemedicineapi.dto.AppointmentRequest;
-import com.project2.telemedicineapi.dto.AppointmentRequestDTO;
-import com.project2.telemedicineapi.entities.Appointment;
-import com.project2.telemedicineapi.entities.Patient;
 import com.project2.telemedicineapi.exception.UnAuthorizedResponse;
 import com.project2.telemedicineapi.exception.UnauthorizedExeption;
-import com.project2.telemedicineapi.repositories.AppointmentRepository;
 import com.project2.telemedicineapi.services.AppointmentService;
 import com.project2.telemedicineapi.services.JwtService;
-import com.project2.telemedicineapi.services.PatientService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/appointment")
@@ -253,6 +245,39 @@ public class AppointmentController {
         }
         return ResponseEntity.status(500).body("Internal Error");
     }
+    @PutMapping("/{id}/note")
+    public ResponseEntity addNote(@PathVariable int id,@RequestBody String note, @RequestHeader("Authorization") String jwt){
+        if (!jwt.equals(null) && !jwt.equals("")) {
+            try {
 
+
+                jwt = jwt.split(" ")[1];
+                Jws<Claims> token = null;
+                try {
+                    token = jwtService.parseJwt(jwt);
+                    String role = null;
+                    try {
+                        role = token.getBody().get("user_id").toString().split(" ")[0];
+                    } catch (UnauthorizedExeption r) {
+                        return ResponseEntity.status(500).body("Invalid User Information");
+                    }
+
+
+                    if (token != null && (role.equals("doctor"))) {
+                        appointmentService.addNote(id,note);
+                        return ResponseEntity.status(202).build();
+                    } else {
+                        return ResponseEntity.status(403).body("You are not authorized at this point");
+                    }
+                } catch (UnAuthorizedResponse e) {
+                    return ResponseEntity.status(500).body("Invalid Token");
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return ResponseEntity.status(400).body("You need to Login");
+            }
+
+        }
+        return ResponseEntity.status(500).body("Internal Error");
+    }
 
 }

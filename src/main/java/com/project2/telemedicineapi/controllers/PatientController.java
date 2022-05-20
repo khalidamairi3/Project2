@@ -1,13 +1,12 @@
 package com.project2.telemedicineapi.controllers;
 
-import java.util.List;
-import java.util.Optional;
+
 
 import com.project2.telemedicineapi.dto.LoginDTO;
-import com.project2.telemedicineapi.entities.Doctor;
+
 import com.project2.telemedicineapi.exception.UnAuthorizedResponse;
 import com.project2.telemedicineapi.exception.UnauthorizedExeption;
-import com.project2.telemedicineapi.repositories.PatientRepository;
+
 import com.project2.telemedicineapi.services.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -16,7 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.project2.telemedicineapi.entities.Appointment;
+
 import com.project2.telemedicineapi.entities.Patient;
 
 import com.project2.telemedicineapi.services.PatientService;
@@ -81,7 +80,7 @@ public class PatientController {
 
 
                     if (token != null && (role.equals("patient") || role.equals("doctor"))) {
-                        return ResponseEntity.ok(patientService.getPatientById(id));
+                        return ResponseEntity.ok(patientService.getPatient(id));
                     } else {
                         return ResponseEntity.status(403).body("You are not authorized at this point");
                     }

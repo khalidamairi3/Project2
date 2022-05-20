@@ -6,10 +6,9 @@ import com.project2.telemedicineapi.exception.BadParameterxception;
 import com.project2.telemedicineapi.exception.DoctorsNotFound;
 import com.project2.telemedicineapi.repositories.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
+
 import java.util.List;
 
 @Service
