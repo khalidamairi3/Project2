@@ -246,7 +246,7 @@ public class AppointmentController {
         return ResponseEntity.status(500).body("Internal Error");
     }
     @PutMapping("/{id}/note")
-    public ResponseEntity addNote(@PathVariable int id,@RequestHeader("Authorization") String jwt){
+    public ResponseEntity addNote(@PathVariable int id,@RequestBody String note, @RequestHeader("Authorization") String jwt){
         if (!jwt.equals(null) && !jwt.equals("")) {
             try {
 
@@ -264,7 +264,7 @@ public class AppointmentController {
 
 
                     if (token != null && (role.equals("doctor"))) {
-
+                        appointmentService.addNote(id,note);
                         return ResponseEntity.status(202).build();
                     } else {
                         return ResponseEntity.status(403).body("You are not authorized at this point");

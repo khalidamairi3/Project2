@@ -102,7 +102,7 @@ public class DoctorController {
                         return ResponseEntity.status(403).body("You are not authorized at this point");
                     }
                 } catch (UnAuthorizedResponse e) {
-                    return ResponseEntity.status(500).body("Invalid User Information");
+                    return ResponseEntity.status(500).body("Invalid Token");
                 }
 
             } catch (ArrayIndexOutOfBoundsException e) {

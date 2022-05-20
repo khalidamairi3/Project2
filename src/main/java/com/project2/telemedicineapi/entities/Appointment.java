@@ -12,7 +12,6 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Appointment {
 
     @Id
