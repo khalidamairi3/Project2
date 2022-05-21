@@ -112,7 +112,7 @@ public class PatientController {
     }
 
     /**
-     * Sends put request to update patient profile
+     * Sends request to update patient profile
      * @param existingPatient - patient instance
      * @param jwt - session token
      * @return status
