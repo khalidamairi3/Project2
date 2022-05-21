@@ -10,6 +10,8 @@ import com.project2.telemedicineapi.exception.UnauthorizedExeption;
 import com.project2.telemedicineapi.services.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,13 @@ public class PatientController {
     @Autowired
     JwtService jwtService;
 
+    final Logger logger = LoggerFactory.getLogger(PatientController.class);
 
+    /**
+     * Sends post request to login as a patient
+     * @param dto - login data transfer object
+     * @return status and header (for token)
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
         try {
@@ -49,6 +57,10 @@ public class PatientController {
         }
 
     }
+    /**
+     * Sends post request to create a new patient
+     * @param incomingPatient - new patient data transfer object
+     */
     @PostMapping("/register")
     public ResponseEntity createPatient(@RequestBody Patient incomingPatient) {
         try{
@@ -61,6 +73,11 @@ public class PatientController {
 
     }
 
+    /**
+     * Gets patient by id
+     * @param id - patient id
+     * @param jwt - session token
+     */
     @GetMapping("/{id}")
     public ResponseEntity findPatientById(@PathVariable int id,@RequestHeader("Authorization") String jwt) {
 
@@ -96,7 +113,12 @@ public class PatientController {
         return ResponseEntity.status(500).body("Internal Error");
 
     }
-
+    /**
+     * Sends request to update patient profile
+     * @param existingPatient - patient instance
+     * @param jwt - session token
+     * @return status
+     */
     @PutMapping("/update")
     public ResponseEntity editPatientProfile(@RequestBody Patient existingPatient,@RequestHeader("Authorization") String jwt) {
 

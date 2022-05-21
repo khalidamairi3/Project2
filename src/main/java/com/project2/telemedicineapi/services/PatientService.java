@@ -22,20 +22,36 @@ public class PatientService {
     public void setPatientRepository(PatientRepository patientRepository){
         this.patientRepository=patientRepository;
     }
+    /**
+     * Create patient
+     * @param incomingPatient - patient instance
+     */
     public void createPatient(Patient incomingPatient) {
         patientRepository.save(incomingPatient);
     }
+    /**
+     * Get all patients
+     */
     public List<Patient> getAllPatients(){
         return patientRepository.findAll();
     }
 
-
+    /**
+     * Get patient by id
+     * @param id
+     */
     public Patient getPatient(int id)
     {
         return patientRepository.getById(id);
 
     }
 
+    /**
+     * patient login to match info with the db and return a patient
+     * @param dto
+     * @return
+     * @throws BadParameterxception
+     */
     public Patient login(LoginDTO dto) throws BadParameterxception {
         if (dto.getUsername().trim().equals("") || dto.getPassword().trim().equals("")) {
             throw new BadParameterxception("Invalid input"); //need to add different exception

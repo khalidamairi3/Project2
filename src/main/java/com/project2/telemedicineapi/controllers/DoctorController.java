@@ -12,6 +12,8 @@ import com.project2.telemedicineapi.services.PatientService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +32,19 @@ public class DoctorController {
     PatientService patientService;
     @Autowired
     JwtService jwtService;
+    final Logger logger = LoggerFactory.getLogger(DoctorController.class);
 
+    /**
+     * Send post request to login as a doctor
+     * @param dto - login data transfer object
+     * @return status and header (for token)
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDTO dto) {
+
         try {
             Doctor doctor = doctorService.login(dto);
+            logger.info("Doctor login info: {}", doctor);
             String jwt = jwtService.createJwt(doctor);
             HttpHeaders reposeHeader = new HttpHeaders();
             reposeHeader.set("token", jwt);
@@ -49,6 +59,11 @@ public class DoctorController {
 
     }
 
+    /**
+     * Get all patients
+     * @param jwt token
+     * @return all patient instances
+     */
     @GetMapping("/getAllPatients")
     public ResponseEntity<?> getAllPatients(@RequestHeader("Authorization") String jwt) {
 
@@ -69,6 +84,7 @@ public class DoctorController {
 
 
                     if (token != null && role.equals("doctor")) {
+                        logger.info("Get all patients: {}", patientService.getAllPatients());
                         List<Patient> patient = patientService.getAllPatients();
                         return ResponseEntity.ok().body(patient);
                     } else {
@@ -86,11 +102,16 @@ public class DoctorController {
     }
 
 
+    /**
+     * Get all doctors
+     * @return all doctor instances
+     */
     @GetMapping("/getAllDoctors")
     public ResponseEntity<?> getAllDoctors() {
             try {
 
                 List<Doctor> doctor = doctorService.getalldoctors();
+                logger.info("Get all doctors: {}", doctorService.getalldoctors());
                 return ResponseEntity.ok().body(doctor);
             }catch (Exception ex){
                 return ResponseEntity.notFound().build();

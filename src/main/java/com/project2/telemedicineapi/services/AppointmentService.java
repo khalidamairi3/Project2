@@ -39,7 +39,10 @@ public class AppointmentService {
 
 
 
-
+    /**
+     * Create appointment
+     * @param newAppointment - new appointment data transfer object
+     */
     public void createAppointment(AppointmentRequest newAppointment) {
         Appointment appointment = new Appointment();
         Patient patient = patientRepository.getById(newAppointment.getPatientId());
@@ -53,24 +56,42 @@ public class AppointmentService {
         notificationClient.callPostEmail(doctor.getPhoneNum(),"Hey " + doctor.getUsername() + ", you have a new appointment request from "+  patient.getUsername() );
     }
 
+    /**
+     * Get all appointments
+     */
     public List<Appointment> getAll() {
         return appointmentRepository.findAll();
     }
 
+    /**
+     * Get appointment associated with doctor id
+     * @param id - doctor id
+     */
     public List<Appointment> getAppointmentsByDoctorId(int id) {
         return appointmentRepository.getAppointmentByDoctorId(id);
 
     }
-
+    /**
+     * Get appointments associated with patient id
+     * @param id - patient id
+     */
     public List<Appointment> getAppointmentsByPatientId(int id) {
         return appointmentRepository.getAppointmentByPatientId(id);
 
     }
 
+    /**
+     * Get appointment by id
+     * @param id - appointment id
+     */
     public Appointment getAppointment(int id) {
         return appointmentRepository.getById(id);
 
     }
+    /**
+     * Update appointment status
+     * @param status
+     */
     public void updateStatus(int id, String status){
         Appointment appointment = getAppointment(id);
         appointment.setStatus(status);
@@ -78,11 +99,22 @@ public class AppointmentService {
         notificationClient.callPostEmail(appointment.getPatient().getPhoneNum(),"Hey " + appointment.getPatient().getUsername() + ", your appointment on " + appointment.getDateTime() + " has been " +appointment.getStatus() +" by "+  appointment.getDoctor().getUsername() );
         appointmentRepository.save(appointment);
     }
+    /**
+     * Add note to appointment with associated id
+     * @param id - appointment id
+     * @param note - consult note
+     */
     public void addNote(int id,String note){
         Appointment appointment = getAppointment(id);
         appointment.setNote(note);
         appointmentRepository.save(appointment);
     }
 
-
+    /**
+     * Delete appointment with id
+     * @param id - appointment id
+     */
+    public void deleteAppointment(int id) {
+        appointmentRepository.deleteById(id);
+    }
 }
