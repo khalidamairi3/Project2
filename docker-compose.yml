@@ -1,0 +1,32 @@
+services:
+  web1:
+    image: telemedicine-api
+    container_name: telemedicine-api
+    restart: always
+    environment:
+      - MY_PORT=9090
+      - DB_URL=jdbc:mysql://dbmysql:3306/telemedapp
+        DB_USERNAME=root
+        DB_PASSWORD=password
+    ports:
+      - 9090:9090
+    depends_on:
+      - dbmysql
+
+  web2:
+    image: react-client
+    container_name: react-client
+    restart: always
+    ports:
+      - 3000:3000
+    depends_on:
+      - telemedicine-api
+
+  dbmysql:
+    image: mysql
+    container_name: db
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+        MYSQL_DATABASE=telemedapp
+        MYSQL_ROOT_USER=root
