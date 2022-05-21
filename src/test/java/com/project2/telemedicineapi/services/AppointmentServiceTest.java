@@ -19,8 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class AppointmentServiceTest {
 
@@ -28,6 +27,7 @@ class AppointmentServiceTest {
     private PatientRepository patientRepository;
     private DoctorRepository doctorRepository;
     private AppointmentService appointmentService;
+    private NotificationClient notificationClient;
 
 
     @BeforeEach
@@ -39,20 +39,23 @@ class AppointmentServiceTest {
         appointmentService.setAppointmentRepository(appointmentRepository);
         appointmentService.setDoctorRepository(doctorRepository);
         appointmentService.setPatientRepository(patientRepository);
-
+        notificationClient = mock(NotificationClient.class);
+        appointmentService.setNotificationClient(notificationClient);
     }
 
     @Test
     void createAppointment() {
         Doctor doctor2 = new Doctor(2, "Subhana", "password", "Subhana", "Menk", "Cardio surgeon", "+1 6474023789");
-        doctorRepository.save(doctor2);
+        when(doctorRepository.getById(2)).thenReturn(doctor2);
         Patient patient1 = new Patient(1, "Ayesha", "password", "Ayesha", "Solanki", "2000-05-12", "+1 6474023382");
-        patientRepository.save(patient1);
+        when(patientRepository.getById(1)).thenReturn(patient1);
         AppointmentRequest appointmentRequest = new AppointmentRequest(2,1,"2022-05-18 12:00:00");
-        appointmentService.createAppointment(appointmentRequest);
         Appointment appointment = new Appointment(1,"2022-05-18 12:00:00","pending","",doctor2,patient1);
-        when(appointmentRepository.getById(1)).thenReturn(appointment);
-        Appointment actual = appointmentService.getAppointment(1);
+        when(appointmentRepository.save(appointment)).thenReturn(appointment);
+        appointmentService.createAppointment(appointmentRequest);
+        doNothing().when(notificationClient).callPostEmail(doctor2.getPhoneNum(),"Hey " + doctor2.getUsername() + ", you have a new appointment request from "+  patient1.getUsername());
+        when(appointmentService.getAppointment(1)).thenReturn(appointment);
+        Appointment actual =appointmentService.getAppointment(1);
         Assertions.assertEquals(appointment,actual);
 
 

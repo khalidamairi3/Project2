@@ -50,6 +50,11 @@ public class DoctorControllerTests {
 
     }
     @Test
+    public void shouldReturnOk() throws Exception{
+        when(doctorService.getalldoctors()).thenReturn(Collections.emptyList());
+        mockMvc.perform(get("/doctor/getAllDoctors")).andExpect(status().isOk());
+    }
+    @Test
     public void shouldReturnNotfound() throws Exception{
         LoginDTO loginDTO = new LoginDTO("Ayesha","");
         when(doctorService.login(loginDTO)).thenThrow();
@@ -57,16 +62,14 @@ public class DoctorControllerTests {
                         .contentType("application/json")
                         .content("{\"username\": \"Ayesha\",\"password\": \" \" }"))
                 .andExpect(status().isNotFound());
+        when(doctorService.getalldoctors()).thenThrow();
+        mockMvc.perform(get("/doctor/getAllDoctors")).andExpect(status().isNotFound());
 
     }
     @Test
     public void shouldReturnInternalError() throws Exception{
 
         mockMvc.perform(get("/doctor/getAllPatients").header("Authorization", ""))
-                .andExpect(status().is5xxServerError())
-                .andExpect(content().string("Internal Error"));
-
-        mockMvc.perform(get("/doctor/getAllDoctors").header("Authorization", ""))
                 .andExpect(status().is5xxServerError())
                 .andExpect(content().string("Internal Error"));
 
@@ -78,10 +81,6 @@ public class DoctorControllerTests {
                 .andExpect(status().is4xxClientError())
                 .andExpect(content().string("You need to Login"));
 
-        when(patientService.getAllPatients()).thenReturn(Collections.emptyList());
-        mockMvc.perform(get("/doctor/getAllDoctors").header("Authorization", "wrongtoken"))
-                .andExpect(status().is4xxClientError())
-                .andExpect(content().string("You need to Login"));
 
     }
 
@@ -94,10 +93,8 @@ public class DoctorControllerTests {
                 .andExpect(status().is5xxServerError())
                 .andExpect(content().string("Invalid Token"));
 
-        when(patientService.getAllPatients()).thenReturn(Collections.emptyList());
-        mockMvc.perform(get("/doctor/getAllDoctors").header("Authorization", "wrong Token"))
-                .andExpect(status().is5xxServerError())
-                .andExpect(content().string("Invalid Token"));
+
 
     }
+
 }

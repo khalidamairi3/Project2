@@ -2,6 +2,8 @@ package com.project2.telemedicineapi.dto;
 
 import org.junit.jupiter.api.Test;
 
+import javax.crypto.MacSpi;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class NotificationRequestTest {
@@ -38,5 +40,10 @@ class NotificationRequestTest {
     @Test
     void testToString() {
         assertEquals("NotificationRequest(phoneNumber=5875684533, message=test)",notificationRequest.toString());
+    }
+    @Test
+    void constructor(){
+        NotificationRequest notificationRequest = new NotificationRequest();
+        assertTrue(notificationRequest instanceof NotificationRequest);
     }
 }

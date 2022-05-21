@@ -18,6 +18,7 @@ public class AppointmentService {
     AppointmentRepository appointmentRepository;
     DoctorRepository doctorRepository;
     PatientRepository patientRepository;
+    NotificationClient notificationClient;
 
     @Autowired
     void setAppointmentRepository(AppointmentRepository appointmentRepository){
@@ -31,14 +32,15 @@ public class AppointmentService {
     void setPatientRepository(PatientRepository patientRepository){
         this.patientRepository= patientRepository;
     }
+    @Autowired
+    void setNotificationClient(NotificationClient notificationClient){this.notificationClient = notificationClient;}
 
 
 
 
 
 
-
-    public Appointment createAppointment(AppointmentRequest newAppointment) {
+    public void createAppointment(AppointmentRequest newAppointment) {
         Appointment appointment = new Appointment();
         Patient patient = patientRepository.getById(newAppointment.getPatientId());
         Doctor doctor = doctorRepository.getById(newAppointment.getDoctorId());
@@ -47,9 +49,8 @@ public class AppointmentService {
         appointment.setNote("");
         appointment.setPatient(patient);
         appointment.setDoctor(doctor);
-        return appointmentRepository.save(appointment);
-//        NotificationClient notificationClient= new NotificationClient();
-//        notificationClient.callPostEmail(doctor.getPhoneNum(),"Hey " + doctor.getUsername() + ", you have a new appointment request from "+  patient.getUsername() );
+        appointmentRepository.save(appointment);
+        notificationClient.callPostEmail(doctor.getPhoneNum(),"Hey " + doctor.getUsername() + ", you have a new appointment request from "+  patient.getUsername() );
     }
 
     public List<Appointment> getAll() {

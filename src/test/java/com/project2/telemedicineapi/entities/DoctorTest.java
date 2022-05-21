@@ -97,6 +97,8 @@ class DoctorTest {
     void constructor(){
         Doctor d1 =new Doctor( "Ayesha", "password", "Ayesha", "Solanki", "Neuro surgeon", "+1 6474023382");
         assertTrue(d1 instanceof Doctor);
+        Doctor d2 = new Doctor();
+        assertTrue(d2 instanceof Doctor);
     }
 
 }

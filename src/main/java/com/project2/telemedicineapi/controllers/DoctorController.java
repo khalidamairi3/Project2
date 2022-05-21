@@ -21,6 +21,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/doctor")
 public class DoctorController {
     @Autowired
@@ -86,29 +87,14 @@ public class DoctorController {
 
 
     @GetMapping("/getAllDoctors")
-    public ResponseEntity<?> getAllDoctors(@RequestHeader("Authorization") String jwt) {
-        if (!jwt.equals(null) && !jwt.equals("")) {
+    public ResponseEntity<?> getAllDoctors() {
             try {
-                jwt = jwt.split(" ")[1];
-                Jws<Claims> token = null;
-                String role = null;
-                try {
-                    token = jwtService.parseJwt(jwt);
-                    role = token.getBody().get("user_id").toString().split(" ")[0];
-                    if (token != null && role.equals("doctor")) {
-                        List<Doctor> doctor = doctorService.getalldoctors();
-                        return ResponseEntity.ok().body(doctor);
-                    } else {
-                        return ResponseEntity.status(403).body("You are not authorized at this point");
-                    }
-                } catch (UnAuthorizedResponse e) {
-                    return ResponseEntity.status(500).body("Invalid Token");
-                }
 
-            } catch (ArrayIndexOutOfBoundsException e) {
-                return ResponseEntity.status(400).body("You need to Login");
+                List<Doctor> doctor = doctorService.getalldoctors();
+                return ResponseEntity.ok().body(doctor);
+            }catch (Exception ex){
+                return ResponseEntity.notFound().build();
             }
-        }
-        return ResponseEntity.status(500).body("Internal Error");
+
     }
 }

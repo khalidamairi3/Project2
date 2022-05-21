@@ -22,6 +22,7 @@ import com.project2.telemedicineapi.services.PatientService;
 
 
 @RestController
+@CrossOrigin("http://localhost:3000")
 @RequestMapping("/patient")
 public class PatientController {
 
