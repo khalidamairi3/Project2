@@ -48,7 +48,8 @@ public class AppointmentService {
         Patient patient = patientRepository.getById(newAppointment.getPatientId());
         Doctor doctor = doctorRepository.getById(newAppointment.getDoctorId());
         appointment.setStatus("pending");
-        appointment.setDateTime(newAppointment.getDateTime());
+        appointment.setDate(newAppointment.getDate());
+        appointment.setTime(newAppointment.getTime());
         appointment.setNote("");
         appointment.setPatient(patient);
         appointment.setDoctor(doctor);
@@ -96,7 +97,7 @@ public class AppointmentService {
         Appointment appointment = getAppointment(id);
         appointment.setStatus(status);
         NotificationClient notificationClient= new NotificationClient();
-        notificationClient.callPostEmail(appointment.getPatient().getPhoneNum(),"Hey " + appointment.getPatient().getUsername() + ", your appointment on " + appointment.getDateTime() + " has been " +appointment.getStatus() +" by "+  appointment.getDoctor().getUsername() );
+        notificationClient.callPostEmail(appointment.getPatient().getPhoneNum(),"Hey " + appointment.getPatient().getUsername() + ", your appointment on " + appointment.getDate()  +  " at " +  appointment.getTime()  +  " has been " +appointment.getStatus() +" by "+  appointment.getDoctor().getUsername() );
         appointmentRepository.save(appointment);
     }
     /**

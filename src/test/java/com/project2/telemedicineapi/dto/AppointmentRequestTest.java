@@ -8,7 +8,7 @@ class AppointmentRequestTest {
 
     @Test
     void constructor(){
-        AppointmentRequest appointmentRequest = new AppointmentRequest(1,2,"");
+        AppointmentRequest appointmentRequest = new AppointmentRequest(1,2,"","");
         assertTrue(appointmentRequest instanceof AppointmentRequest);
     }
 

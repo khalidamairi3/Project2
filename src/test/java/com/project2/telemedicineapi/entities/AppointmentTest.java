@@ -14,7 +14,7 @@ class AppointmentTest {
     @Test
     public void testToString(){
         Appointment appointment = new Appointment("pending","note",null,null);
-        assertEquals("Appointment(id=null, dateTime=null, status=pending, note=note, doctor=null, patient=null)",appointment.toString());
+        assertEquals("Appointment(id=null, date=null, time=null, status=pending, note=note, doctor=null, patient=null)",appointment.toString());
     }
 
 }

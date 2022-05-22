@@ -49,8 +49,8 @@ class AppointmentServiceTest {
         when(doctorRepository.getById(2)).thenReturn(doctor2);
         Patient patient1 = new Patient(1, "Ayesha", "password", "Ayesha", "Solanki", "2000-05-12", "+1 6474023382");
         when(patientRepository.getById(1)).thenReturn(patient1);
-        AppointmentRequest appointmentRequest = new AppointmentRequest(2,1,"2022-05-18 12:00:00");
-        Appointment appointment = new Appointment(1,"2022-05-18 12:00:00","pending","",doctor2,patient1);
+        AppointmentRequest appointmentRequest = new AppointmentRequest(2,1,"May 18th, 2022", "12:00 PM");
+        Appointment appointment = new Appointment(1,"May 18th, 2022", "12:00 PM","pending","",doctor2,patient1);
         when(appointmentRepository.save(appointment)).thenReturn(appointment);
         appointmentService.createAppointment(appointmentRequest);
         doNothing().when(notificationClient).callPostEmail(doctor2.getPhoneNum(),"Hey " + doctor2.getUsername() + ", you have a new appointment request from "+  patient1.getUsername());
@@ -73,7 +73,7 @@ class AppointmentServiceTest {
     void getAppointmentsByDoctorId() {
         Doctor doctor2 = new Doctor(2, "Subhana", "password", "Subhana", "Menk", "Cardio surgeon", "+1 6474023789");
         Patient patient1 = new Patient(1, "Ayesha", "password", "Ayesha", "Solanki", "2000-05-12", "+1 6474023382");
-        Appointment appointment = new Appointment(1,"2022-05-18 12:00:00","pending","",doctor2,patient1);
+        Appointment appointment = new Appointment(1,"May 18th, 2022", "12:00 PM","pending","",doctor2,patient1);
         List<Appointment> appointments = new ArrayList<>();
         appointments.add(appointment);
         when(appointmentRepository.getAppointmentByDoctorId(2)).thenReturn(appointments);
@@ -85,8 +85,8 @@ class AppointmentServiceTest {
     void getAppointmentsByPatientId() {
         Doctor doctor2 = new Doctor(2, "Subhana", "password", "Subhana", "Menk", "Cardio surgeon", "+1 6474023789");
         Patient patient1 = new Patient(1, "Ayesha", "password", "Ayesha", "Solanki", "2000-05-12", "+1 6474023382");
-        AppointmentRequest appointmentRequest = new AppointmentRequest(2,1,"2022-05-18 12:00:00");
-        Appointment appointment = new Appointment(1,"2022-05-18 12:00:00","pending","",doctor2,patient1);
+        AppointmentRequest appointmentRequest = new AppointmentRequest(2,1,"May 18th, 2022", "12:00 PM");
+        Appointment appointment = new Appointment(1,"May 18th, 2022", "12:00 PM","pending","",doctor2,patient1);
         List<Appointment> appointments = new ArrayList<>();
         appointments.add(appointment);
         when(appointmentRepository.getAppointmentByPatientId(1)).thenReturn(appointments);
@@ -106,7 +106,7 @@ class AppointmentServiceTest {
     void addNote() {
         Doctor doctor2 = new Doctor(2, "Subhana", "password", "Subhana", "Menk", "Cardio surgeon", "+1 6474023789");
         Patient patient1 = new Patient(1, "Ayesha", "password", "Ayesha", "Solanki", "2000-05-12", "+1 6474023382");
-        Appointment appointment = new Appointment(1,"2022-05-18 12:00:00","pending","",doctor2,patient1);
+        Appointment appointment = new Appointment(1,"May 18th, 2022", "12:00 PM","pending","",doctor2,patient1);
         when(appointmentRepository.getById(1)).thenReturn(appointment);
         appointment.setNote("test note");
         appointmentService.addNote(1,"test note");

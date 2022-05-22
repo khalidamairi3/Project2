@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class NotificationClient {
 
-    private static final String SEND_NOTIFICATION_REQUEST ="http://localhost:8080/messages";
+    private static final String SEND_NOTIFICATION_REQUEST ="http://localhost:8081/messages";
     private RestTemplate restTemplate = new RestTemplate();
 
 
