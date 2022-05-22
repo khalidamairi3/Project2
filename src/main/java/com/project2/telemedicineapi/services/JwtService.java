@@ -44,10 +44,12 @@ public class JwtService {
                 .signWith(key)
                 .compact();
     }
+
     /**
      * Create jwt key and assign to patient
      * @param patient
      */
+
     public String createPatientJwt(Patient patient) {
         return Jwts.builder().setSubject(patient.getUsername())
                 .claim("user_id", "patient "+patient.getId())

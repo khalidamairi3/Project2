@@ -14,3 +14,4 @@ public class AppointmentRequest {
     private String date;
     private String time;
 }
+

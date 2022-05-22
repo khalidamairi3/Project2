@@ -5,6 +5,8 @@ import com.project2.telemedicineapi.entities.Doctor;
 import com.project2.telemedicineapi.exception.BadParameterxception;
 import com.project2.telemedicineapi.exception.DoctorsNotFound;
 import com.project2.telemedicineapi.repositories.DoctorRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ import java.util.List;
 
 @Service
 public class DoctorService {
+    Logger logger = LoggerFactory.getLogger(DoctorService.class);
     @Autowired
     DoctorRepository doctorrepository;
 
@@ -22,6 +25,7 @@ public class DoctorService {
      * @throws DoctorsNotFound if there is no doctor list found throws the exception
      * @List provide the collection of doctors list
      */
+
     public List<Doctor> getalldoctors() throws DoctorsNotFound {
 
         List<Doctor> doctors = doctorrepository.findAll();
@@ -45,6 +49,7 @@ public class DoctorService {
      * @throws BadParameterxception
      */
     public Doctor login(LoginDTO dto) throws BadParameterxception {
+
         if (dto.getUsername().trim().equals("") || dto.getPassword().trim().equals("")) {
             throw new BadParameterxception("Invalid input"); //need to add different exception
         }

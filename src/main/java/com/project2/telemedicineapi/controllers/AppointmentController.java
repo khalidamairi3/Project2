@@ -200,6 +200,7 @@ public class AppointmentController {
         }
 
     }
+
     /**
      * Sends put request to update appointment status
      * @param id appointment id
@@ -333,5 +334,6 @@ public class AppointmentController {
         appointmentService.deleteAppointment(id);
         logger.info("Appointment successfully deleted!");
     }
+
 
 }

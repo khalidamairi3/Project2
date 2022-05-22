@@ -2,6 +2,7 @@ package com.project2.telemedicineapi.controllers;
 
 
 
+
 import com.project2.telemedicineapi.dto.LoginDTO;
 
 import com.project2.telemedicineapi.exception.UnAuthorizedResponse;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 
 import com.project2.telemedicineapi.entities.Patient;
@@ -61,6 +63,7 @@ public class PatientController {
      * Sends post request to create a new patient
      * @param incomingPatient - new patient data transfer object
      */
+
     @PostMapping("/register")
     public ResponseEntity createPatient(@RequestBody Patient incomingPatient) {
         try{
@@ -72,6 +75,7 @@ public class PatientController {
 
 
     }
+
 
     /**
      * Gets patient by id
@@ -153,6 +157,7 @@ public class PatientController {
 
         }
         return ResponseEntity.status(500).body("Internal Error");
+
 
 
     }

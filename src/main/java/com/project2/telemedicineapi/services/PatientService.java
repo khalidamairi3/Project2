@@ -1,11 +1,13 @@
 package com.project2.telemedicineapi.services;
 
+
 import com.project2.telemedicineapi.dto.LoginDTO;
 
 import com.project2.telemedicineapi.entities.Patient;
 import com.project2.telemedicineapi.exception.BadParameterxception;
 import com.project2.telemedicineapi.exception.DoctorsNotFound;
 import com.project2.telemedicineapi.exception.PatientNotFound;
+
 import com.project2.telemedicineapi.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.Optional;
 
 @Service
 public class PatientService {
+
 
 
     PatientRepository patientRepository;
@@ -32,9 +35,11 @@ public class PatientService {
     /**
      * Get all patients
      */
+
     public List<Patient> getAllPatients(){
         return patientRepository.findAll();
     }
+
 
     /**
      * Get patient by id
@@ -62,6 +67,7 @@ public class PatientService {
         }
         return patient;
     }
+
 
 
 }

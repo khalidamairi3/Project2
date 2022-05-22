@@ -1,6 +1,7 @@
 package com.project2.telemedicineapi.services;
 
 import com.project2.telemedicineapi.dto.AppointmentRequest;
+
 import com.project2.telemedicineapi.entities.Appointment;
 import com.project2.telemedicineapi.entities.Doctor;
 import com.project2.telemedicineapi.entities.Patient;
@@ -10,6 +11,7 @@ import com.project2.telemedicineapi.repositories.DoctorRepository;
 import com.project2.telemedicineapi.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
@@ -64,6 +66,7 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
+
     /**
      * Get appointment associated with doctor id
      * @param id - doctor id
@@ -72,6 +75,7 @@ public class AppointmentService {
         return appointmentRepository.getAppointmentByDoctorId(id);
 
     }
+
     /**
      * Get appointments associated with patient id
      * @param id - patient id
@@ -80,6 +84,7 @@ public class AppointmentService {
         return appointmentRepository.getAppointmentByPatientId(id);
 
     }
+
 
     /**
      * Get appointment by id
@@ -118,4 +123,5 @@ public class AppointmentService {
     public void deleteAppointment(int id) {
         appointmentRepository.deleteById(id);
     }
+
 }

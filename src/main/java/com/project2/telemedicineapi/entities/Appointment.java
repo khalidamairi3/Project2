@@ -32,6 +32,7 @@ public class Appointment {
     @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
+
     public Appointment(String status, String note, Doctor doctor, Patient patient) {
         this.status = status;
         this.note = note;
@@ -39,3 +40,4 @@ public class Appointment {
         this.patient = patient;
     }
 }
+
