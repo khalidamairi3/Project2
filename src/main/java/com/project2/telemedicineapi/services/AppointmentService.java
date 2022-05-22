@@ -18,7 +18,7 @@ public class AppointmentService {
     AppointmentRepository appointmentRepository;
     DoctorRepository doctorRepository;
     PatientRepository patientRepository;
-    NotificationClient notificationClient;
+    NotificationClient notificationClient = new NotificationClient();
 
     @Autowired
     void setAppointmentRepository(AppointmentRepository appointmentRepository){
@@ -32,7 +32,7 @@ public class AppointmentService {
     void setPatientRepository(PatientRepository patientRepository){
         this.patientRepository= patientRepository;
     }
-    @Autowired
+
     void setNotificationClient(NotificationClient notificationClient){this.notificationClient = notificationClient;}
 
 
