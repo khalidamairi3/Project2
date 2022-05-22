@@ -1,5 +1,4 @@
 package com.project2.telemedicineapi.dto;
-
 import lombok.*;
 
 @Getter
@@ -8,10 +7,7 @@ import lombok.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppointmentRequest {
-    private int doctorId;
-    private int patientId;
-    private String date;
-    private String time;
+public class NotificationRequest {
+    private String phoneNumber;
+    private String message;
 }
-

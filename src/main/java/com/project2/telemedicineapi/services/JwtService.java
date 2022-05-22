@@ -23,7 +23,9 @@ public class JwtService {
         key = Keys.hmacShaKeyFor(secret);
     }
 
-    // singleton implementation
+    /**
+     * Singleton implementation
+     */
     public static JwtService getInstance() {
         if (JwtService.instance == null) {
             JwtService.instance = new JwtService();
@@ -32,13 +34,22 @@ public class JwtService {
         return JwtService.instance;
     }
 
-    // sign a JWT with the key
+    /**
+     * Create jwt token and assign to doctor
+     * @param doctor
+     */
     public String createJwt(Doctor doctor) {
         return Jwts.builder().setSubject(doctor.getUsername())
                 .claim("user_id", "doctor "+doctor.getId())
                 .signWith(key)
                 .compact();
     }
+
+    /**
+     * Create jwt key and assign to patient
+     * @param patient
+     */
+
     public String createPatientJwt(Patient patient) {
         return Jwts.builder().setSubject(patient.getUsername())
                 .claim("user_id", "patient "+patient.getId())
@@ -46,7 +57,10 @@ public class JwtService {
                 .compact();
     }
 
-    // validate a JWT with the key
+    /**
+     * Validate jwt key
+     * @param jwt - key
+     */
     public Jws<Claims> parseJwt(String jwt) throws UnAuthorizedResponse {
         try {
             String id = String.valueOf(Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(jwt));

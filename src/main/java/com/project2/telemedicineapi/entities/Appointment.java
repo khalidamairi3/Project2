@@ -12,7 +12,6 @@ import javax.persistence.*;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Appointment {
 
     @Id
@@ -20,22 +19,25 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String dateTime;
-    private boolean approved;
+    private String date;
+    private String time;
+    private String status;
     private String note;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="doctor_id", referencedColumnName = "id")
     private Doctor doctor;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="patient_id", referencedColumnName = "id")
     private Patient patient;
 
-    public Appointment(Integer id, boolean approved, Doctor doctor, Patient patient) {
-        this.id = id;
-        this.approved = approved;
+
+    public Appointment(String status, String note, Doctor doctor, Patient patient) {
+        this.status = status;
+        this.note = note;
         this.doctor = doctor;
         this.patient = patient;
     }
 }
+
